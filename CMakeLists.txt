@@ -13,6 +13,7 @@ endif()
 
 file(GLOB SOURCES src/*.c)
 add_executable(butterscotch ${SOURCES})
+target_include_directories(butterscotch PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 if(PLATFORM STREQUAL "glfw")
     find_package(PkgConfig REQUIRED)
