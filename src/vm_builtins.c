@@ -490,13 +490,13 @@ static RValue builtinDarctan2(VMContext* ctx, RValue* args, int32_t argCount) {
 static RValue builtinSin(VMContext* ctx, RValue* args, int32_t argCount) {
     (void) ctx;
     if (1 > argCount) return RValue_makeReal(0.0);
-    return RValue_makeReal(sin(RValue_toReal(args[0]) * (M_PI / 180.0)));
+    return RValue_makeReal(sin(RValue_toReal(args[0])));
 }
 
 static RValue builtinCos(VMContext* ctx, RValue* args, int32_t argCount) {
     (void) ctx;
     if (1 > argCount) return RValue_makeReal(0.0);
-    return RValue_makeReal(cos(RValue_toReal(args[0]) * (M_PI / 180.0)));
+    return RValue_makeReal(cos(RValue_toReal(args[0])));
 }
 
 static RValue builtinDegtorad(VMContext* ctx, RValue* args, int32_t argCount) {
