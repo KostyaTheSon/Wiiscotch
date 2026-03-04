@@ -1,6 +1,7 @@
 #include "runner.h"
 #include "vm.h"
 #include "utils.h"
+#include "json_writer.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -591,6 +592,216 @@ void Runner_dumpState(Runner* runner) {
     }
 
     printf("\n=== End Frame %d State Dump ===\n", runner->frameCount);
+}
+
+// ===[ JSON State Dump ]===
+
+static void writeRValueJson(JsonWriter* w, RValue val) {
+    switch (val.type) {
+        case RVALUE_REAL:
+            JsonWriter_double(w, val.real);
+            break;
+        case RVALUE_INT32:
+            JsonWriter_int(w, val.int32);
+            break;
+        case RVALUE_INT64:
+            JsonWriter_int(w, val.int64);
+            break;
+        case RVALUE_STRING:
+            JsonWriter_string(w, val.string);
+            break;
+        case RVALUE_BOOL:
+            JsonWriter_bool(w, val.int32 != 0);
+            break;
+        case RVALUE_UNDEFINED:
+            JsonWriter_null(w);
+            break;
+    }
+}
+
+char* Runner_dumpStateJson(Runner* runner) {
+    DataWin* dataWin = runner->dataWin;
+    VMContext* vm = runner->vmContext;
+    int32_t instanceCount = (int32_t) arrlen(runner->instances);
+
+    JsonWriter w = JsonWriter_create();
+
+    JsonWriter_beginObject(&w);
+
+    JsonWriter_propertyInt(&w, "frame", runner->frameCount);
+
+    // Room info
+    JsonWriter_key(&w, "room");
+    JsonWriter_beginObject(&w);
+    JsonWriter_propertyString(&w, "name", runner->currentRoom->name);
+    JsonWriter_propertyInt(&w, "index", runner->currentRoomIndex);
+    JsonWriter_endObject(&w);
+
+    // Instances
+    JsonWriter_key(&w, "instances");
+    JsonWriter_beginArray(&w);
+
+    repeat(instanceCount, i) {
+        Instance* inst = runner->instances[i];
+        if (inst == nullptr || !inst->active) continue;
+
+        const char* objName = (inst->objectIndex >= 0 && dataWin->objt.count > (uint32_t) inst->objectIndex) ? dataWin->objt.objects[inst->objectIndex].name : nullptr;
+
+        const char* spriteName = nullptr;
+        if (inst->spriteIndex >= 0 && dataWin->sprt.count > (uint32_t) inst->spriteIndex) {
+            spriteName = dataWin->sprt.sprites[inst->spriteIndex].name;
+        }
+
+        JsonWriter_beginObject(&w);
+
+        JsonWriter_propertyInt(&w, "instanceId", inst->instanceId);
+        JsonWriter_propertyString(&w, "objectName", objName);
+        JsonWriter_propertyInt(&w, "objectIndex", inst->objectIndex);
+        JsonWriter_propertyDouble(&w, "x", inst->x);
+        JsonWriter_propertyDouble(&w, "y", inst->y);
+        JsonWriter_propertyInt(&w, "depth", inst->depth);
+
+        // Sprite
+        JsonWriter_key(&w, "sprite");
+        JsonWriter_beginObject(&w);
+        JsonWriter_propertyString(&w, "name", spriteName);
+        JsonWriter_propertyInt(&w, "index", inst->spriteIndex);
+        JsonWriter_propertyDouble(&w, "imageIndex", inst->imageIndex);
+        JsonWriter_propertyDouble(&w, "imageSpeed", inst->imageSpeed);
+        JsonWriter_endObject(&w);
+
+        // Scale
+        JsonWriter_key(&w, "scale");
+        JsonWriter_beginObject(&w);
+        JsonWriter_propertyDouble(&w, "x", inst->imageXscale);
+        JsonWriter_propertyDouble(&w, "y", inst->imageYscale);
+        JsonWriter_endObject(&w);
+
+        JsonWriter_propertyDouble(&w, "angle", inst->imageAngle);
+        JsonWriter_propertyDouble(&w, "alpha", inst->imageAlpha);
+        JsonWriter_propertyInt(&w, "blend", inst->imageBlend);
+        JsonWriter_propertyBool(&w, "visible", inst->visible);
+        JsonWriter_propertyBool(&w, "active", inst->active);
+        JsonWriter_propertyBool(&w, "solid", inst->solid);
+        JsonWriter_propertyBool(&w, "persistent", inst->persistent);
+
+        // Alarms
+        JsonWriter_key(&w, "alarms");
+        JsonWriter_beginObject(&w);
+        repeat(GML_ALARM_COUNT, alarmIdx) {
+            if (inst->alarm[alarmIdx] >= 0) {
+                char alarmKey[4];
+                snprintf(alarmKey, sizeof(alarmKey), "%d", alarmIdx);
+                JsonWriter_propertyInt(&w, alarmKey, inst->alarm[alarmIdx]);
+            }
+        }
+        JsonWriter_endObject(&w);
+
+        // Self variables (non-array)
+        JsonWriter_key(&w, "selfVariables");
+        JsonWriter_beginObject(&w);
+        repeat(dataWin->vari.variableCount, varIdx) {
+            Variable* var = &dataWin->vari.variables[varIdx];
+            if (var->instanceType != INSTANCE_SELF || var->varID < 0) continue;
+            if ((uint32_t) var->varID >= inst->selfVarCount) continue;
+            RValue val = inst->selfVars[var->varID];
+            if (val.type == RVALUE_UNDEFINED) continue;
+
+            JsonWriter_key(&w, var->name);
+            writeRValueJson(&w, val);
+        }
+        JsonWriter_endObject(&w);
+
+        // Self arrays
+        JsonWriter_key(&w, "selfArrays");
+        JsonWriter_beginObject(&w);
+        int64_t selfArrayLen = hmlen(inst->selfArrayMap);
+        if (selfArrayLen > 0) {
+            repeat(selfArrayLen, arrIdx) {
+                int64_t key = inst->selfArrayMap[arrIdx].key;
+                RValue val = inst->selfArrayMap[arrIdx].value;
+                int32_t varID = (int32_t) (key >> 32);
+                int32_t arrayIndex = (int32_t) (key & 0xFFFFFFFF);
+
+                // Find variable name
+                const char* varName = nullptr;
+                repeat(dataWin->vari.variableCount, varIdx) {
+                    Variable* var = &dataWin->vari.variables[varIdx];
+                    if (var->varID == varID && var->instanceType == INSTANCE_SELF) {
+                        varName = var->name;
+                        break;
+                    }
+                }
+
+                if (varName == nullptr) continue;
+
+                // Check if we already started this variable's object
+                // We write arrays as "varName": {"0": val, "1": val, ...}
+                // Since selfArrayMap entries may be interleaved, we build per-variable
+                // For simplicity, write each entry as varName[index] flattened
+                char compositeKey[256];
+                snprintf(compositeKey, sizeof(compositeKey), "%s[%d]", varName, arrayIndex);
+                JsonWriter_key(&w, compositeKey);
+                writeRValueJson(&w, val);
+            }
+        }
+        JsonWriter_endObject(&w);
+
+        JsonWriter_endObject(&w);
+    }
+
+    JsonWriter_endArray(&w);
+
+    // Global variables (non-array)
+    JsonWriter_key(&w, "globalVariables");
+    JsonWriter_beginObject(&w);
+    repeat(dataWin->vari.variableCount, varIdx) {
+        Variable* var = &dataWin->vari.variables[varIdx];
+        if (var->instanceType != INSTANCE_GLOBAL || var->varID < 0) continue;
+        if ((uint32_t) var->varID >= vm->globalVarCount) continue;
+        RValue val = vm->globalVars[var->varID];
+        if (val.type == RVALUE_UNDEFINED) continue;
+
+        JsonWriter_key(&w, var->name);
+        writeRValueJson(&w, val);
+    }
+    JsonWriter_endObject(&w);
+
+    // Global arrays
+    JsonWriter_key(&w, "globalArrays");
+    JsonWriter_beginObject(&w);
+    int64_t globalArrayLen = hmlen(vm->globalArrayMap);
+    if (globalArrayLen > 0) {
+        repeat(globalArrayLen, arrIdx) {
+            int64_t key = vm->globalArrayMap[arrIdx].key;
+            RValue val = vm->globalArrayMap[arrIdx].value;
+            int32_t varID = (int32_t) (key >> 32);
+            int32_t arrayIndex = (int32_t) (key & 0xFFFFFFFF);
+
+            const char* varName = nullptr;
+            repeat(dataWin->vari.variableCount, varIdx) {
+                Variable* var = &dataWin->vari.variables[varIdx];
+                if (var->varID == varID && var->instanceType == INSTANCE_GLOBAL) {
+                    varName = var->name;
+                    break;
+                }
+            }
+
+            if (varName == nullptr) continue;
+
+            char compositeKey[256];
+            snprintf(compositeKey, sizeof(compositeKey), "%s[%d]", varName, arrayIndex);
+            JsonWriter_key(&w, compositeKey);
+            writeRValueJson(&w, val);
+        }
+    }
+    JsonWriter_endObject(&w);
+
+    JsonWriter_endObject(&w);
+
+    char* result = JsonWriter_copyOutput(&w);
+    JsonWriter_free(&w);
+    return result;
 }
 
 void Runner_free(Runner* runner) {

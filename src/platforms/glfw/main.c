@@ -29,6 +29,8 @@ typedef struct {
     const char* screenshotPattern;
     FrameSetEntry* screenshotFrames;
     FrameSetEntry* dumpFrames;
+    FrameSetEntry* dumpJsonFrames;
+    const char* dumpJsonFilePattern;
     StringBooleanEntry* varReadsToBeTraced;
     StringBooleanEntry* varWritesToBeTraced;
     StringBooleanEntry* functionCallsToBeTraced;
@@ -65,6 +67,8 @@ static void parseCommandLineArgs(CommandLineArgs* args, int argc, char* argv[]) 
         {"trace-frames", no_argument, nullptr, 'k'},
         {"exit-at-frame", required_argument, nullptr, 'x'},
         {"dump-frame", required_argument, nullptr, 'd'},
+        {"dump-frame-json", required_argument, nullptr, 'j'},
+        {"dump-frame-json-file", required_argument, nullptr, 'J'},
         {"speed", required_argument, nullptr, 'M'},
         {nullptr,               0,                 nullptr,  0 }
     };
@@ -146,6 +150,19 @@ static void parseCommandLineArgs(CommandLineArgs* args, int argc, char* argv[]) 
                 hmput(args->dumpFrames, (int) frame, true);
                 break;
             }
+            case 'j': {
+                char* endPtr;
+                long frame = strtol(optarg, &endPtr, 10);
+                if (*endPtr != '\0' || 0 > frame) {
+                    fprintf(stderr, "Error: Invalid frame number '%s' for --dump-frame-json\n", optarg);
+                    exit(1);
+                }
+                hmput(args->dumpJsonFrames, (int) frame, true);
+                break;
+            }
+            case 'J':
+                args->dumpJsonFilePattern = optarg;
+                break;
             case 'M': {
                 char* endPtr;
                 double speed = strtod(optarg, &endPtr);
@@ -174,6 +191,11 @@ static void parseCommandLineArgs(CommandLineArgs* args, int argc, char* argv[]) 
         exit(1);
     }
 
+    if (args->dumpJsonFilePattern != nullptr && hmlen(args->dumpJsonFrames) == 0) {
+        fprintf(stderr, "Error: --dump-frame-json-file requires --dump-frame-json to be set\n");
+        exit(1);
+    }
+
     if (args->headless && args->speedMultiplier != 1.0) {
         fprintf(stderr, "You can't set the speed multiplier while running in headless mode! Headless mode always run in real time\n");
         exit(1);
@@ -183,6 +205,7 @@ static void parseCommandLineArgs(CommandLineArgs* args, int argc, char* argv[]) 
 static void freeCommandLineArgs(CommandLineArgs* args) {
     hmfree(args->screenshotFrames);
     hmfree(args->dumpFrames);
+    hmfree(args->dumpJsonFrames);
     shfree(args->varReadsToBeTraced);
     shfree(args->varWritesToBeTraced);
     shfree(args->functionCallsToBeTraced);
@@ -393,6 +416,27 @@ int main(int argc, char* argv[]) {
         // Dump full runner state if this frame was requested
         if (hmget(args.dumpFrames, runner->frameCount)) {
             Runner_dumpState(runner);
+        }
+
+        // Dump runner state as JSON if this frame was requested
+        if (hmget(args.dumpJsonFrames, runner->frameCount)) {
+            char* json = Runner_dumpStateJson(runner);
+            if (args.dumpJsonFilePattern != nullptr) {
+                char filename[512];
+                snprintf(filename, sizeof(filename), args.dumpJsonFilePattern, runner->frameCount);
+                FILE* f = fopen(filename, "w");
+                if (f != nullptr) {
+                    fwrite(json, 1, strlen(json), f);
+                    fputc('\n', f);
+                    fclose(f);
+                    printf("JSON dump saved: %s\n", filename);
+                } else {
+                    fprintf(stderr, "Error: Could not write JSON dump to '%s'\n", filename);
+                }
+            } else {
+                printf("%s\n", json);
+            }
+            free(json);
         }
 
         Room* activeRoom = runner->currentRoom;
