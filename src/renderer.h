@@ -16,6 +16,7 @@ typedef struct {
     void (*beginFrame)(Renderer* renderer, int32_t viewX, int32_t viewY, int32_t viewW, int32_t viewH, int32_t windowW, int32_t windowH);
     void (*endFrame)(Renderer* renderer);
     void (*drawSprite)(Renderer* renderer, int32_t tpagIndex, float x, float y, float originX, float originY, float xscale, float yscale, float angleDeg, uint32_t color, float alpha);
+    void (*drawSpritePart)(Renderer* renderer, int32_t tpagIndex, int32_t srcOffX, int32_t srcOffY, int32_t srcW, int32_t srcH, float x, float y, uint32_t color, float alpha);
     void (*drawRectangle)(Renderer* renderer, float x1, float y1, float x2, float y2, uint32_t color, float alpha, bool outline);
     void (*flush)(Renderer* renderer);
 } RendererVtable;
@@ -67,6 +68,41 @@ static void Renderer_drawSpriteExt(Renderer* renderer, int32_t spriteIndex, int3
 
     Sprite* sprite = &dw->sprt.sprites[spriteIndex];
     renderer->vtable->drawSprite(renderer, tpagIndex, x, y, (float) sprite->originX, (float) sprite->originY, xscale, yscale, rot, color, alpha);
+}
+
+// Partial draw: draw_sprite_part(sprite, subimg, left, top, width, height, x, y)
+static void Renderer_drawSpritePart(Renderer* renderer, int32_t spriteIndex, int32_t subimg, int32_t left, int32_t top, int32_t width, int32_t height, float x, float y) {
+    DataWin* dw = renderer->dataWin;
+    int32_t tpagIndex = Renderer_resolveTPAGIndex(dw, spriteIndex, subimg);
+    if (0 > tpagIndex) return;
+
+    TexturePageItem* tpag = &dw->tpag.items[tpagIndex];
+
+    // Clip region to TPAG bounds (matching HTML5 Graphics_DrawPart logic)
+    // left/top are in original sprite space; targetX/targetY is where cropped data starts
+    if (left < tpag->targetX) {
+        int32_t off = tpag->targetX - left;
+        x += (float) off;
+        width -= off;
+        left = 0;
+    } else {
+        left -= tpag->targetX;
+    }
+
+    if (top < tpag->targetY) {
+        int32_t off = tpag->targetY - top;
+        y += (float) off;
+        height -= off;
+        top = 0;
+    } else {
+        top -= tpag->targetY;
+    }
+
+    if (width > tpag->sourceWidth - left) width = tpag->sourceWidth - left;
+    if (height > tpag->sourceHeight - top) height = tpag->sourceHeight - top;
+    if (0 >= width || 0 >= height) return;
+
+    renderer->vtable->drawSpritePart(renderer, tpagIndex, left, top, width, height, x, y, 0xFFFFFF, renderer->drawAlpha);
 }
 
 // Default draw: draws instance's sprite using its image_* properties

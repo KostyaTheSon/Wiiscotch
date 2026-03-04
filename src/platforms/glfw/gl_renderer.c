@@ -373,6 +373,65 @@ static void glDrawSprite(Renderer* renderer, int32_t tpagIndex, float x, float y
     gl->quadCount++;
 }
 
+static void glDrawSpritePart(Renderer* renderer, int32_t tpagIndex, int32_t srcOffX, int32_t srcOffY, int32_t srcW, int32_t srcH, float x, float y, uint32_t color, float alpha) {
+    GLRenderer* gl = (GLRenderer*) renderer;
+    DataWin* dw = renderer->dataWin;
+
+    if (0 > tpagIndex || dw->tpag.count <= (uint32_t) tpagIndex) return;
+
+    TexturePageItem* tpag = &dw->tpag.items[tpagIndex];
+    int16_t pageId = tpag->texturePageId;
+    if (0 > pageId || gl->textureCount <= (uint32_t) pageId) return;
+
+    GLuint texId = gl->glTextures[pageId];
+    int32_t texW = gl->textureWidths[pageId];
+    int32_t texH = gl->textureHeights[pageId];
+    if (texW == 0 || texH == 0) return;
+
+    // Flush if texture changed or batch full
+    if (gl->quadCount > 0 && gl->currentTextureId != texId) flushBatch(gl);
+    if (gl->quadCount >= MAX_QUADS) flushBatch(gl);
+    gl->currentTextureId = texId;
+
+    // Compute UVs for the sub-region within the atlas
+    float u0 = (float) (tpag->sourceX + srcOffX) / (float) texW;
+    float v0 = (float) (tpag->sourceY + srcOffY) / (float) texH;
+    float u1 = (float) (tpag->sourceX + srcOffX + srcW) / (float) texW;
+    float v1 = (float) (tpag->sourceY + srcOffY + srcH) / (float) texH;
+
+    // Quad corners (no origin offset, no transform - draw_sprite_part ignores sprite origin)
+    float x0 = x;
+    float y0 = y;
+    float x1 = x + (float) srcW;
+    float y1 = y + (float) srcH;
+
+    // Convert BGR color to RGB floats
+    float r = (float) BGR_R(color) / 255.0f;
+    float g = (float) BGR_G(color) / 255.0f;
+    float b = (float) BGR_B(color) / 255.0f;
+
+    // Write 4 vertices into batch buffer
+    float* verts = gl->vertexData + gl->quadCount * VERTICES_PER_QUAD * FLOATS_PER_VERTEX;
+
+    // Vertex 0: top-left
+    verts[0] = x0; verts[1] = y0; verts[2] = u0; verts[3] = v0;
+    verts[4] = r;  verts[5] = g;  verts[6] = b;  verts[7] = alpha;
+
+    // Vertex 1: top-right
+    verts[8]  = x1; verts[9]  = y0; verts[10] = u1; verts[11] = v0;
+    verts[12] = r;  verts[13] = g;  verts[14] = b;  verts[15] = alpha;
+
+    // Vertex 2: bottom-right
+    verts[16] = x1; verts[17] = y1; verts[18] = u1; verts[19] = v1;
+    verts[20] = r;  verts[21] = g;  verts[22] = b;  verts[23] = alpha;
+
+    // Vertex 3: bottom-left
+    verts[24] = x0; verts[25] = y1; verts[26] = u0; verts[27] = v1;
+    verts[28] = r;  verts[29] = g;  verts[30] = b;  verts[31] = alpha;
+
+    gl->quadCount++;
+}
+
 // Emits a single colored quad into the batch using the white pixel texture
 static void emitColoredQuad(GLRenderer* gl, float x0, float y0, float x1, float y1, float r, float g, float b, float a) {
     if (gl->quadCount > 0 && gl->currentTextureId != gl->whiteTexture) {
@@ -432,6 +491,7 @@ static RendererVtable glVtable = {
     .beginFrame = glBeginFrame,
     .endFrame = glEndFrame,
     .drawSprite = glDrawSprite,
+    .drawSpritePart = glDrawSpritePart,
     .drawRectangle = glDrawRectangle,
     .flush = glRendererFlush,
 };
