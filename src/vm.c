@@ -792,7 +792,7 @@ static void handlePushScoped(VMContext* ctx, uint32_t instr, const uint8_t* extr
         int32_t resolvedVarID = resolveArrayAlias(variables, count, varDef->varID);
         val = arrayMapGet(variableMap, resolvedVarID, access.arrayIndex);
         if (shouldTraceVariable(traceMap, scopeName, altScopeName, varDef->name)) {
-            char* rvalueAsString = RValue_toString(val);
+            char* rvalueAsString = RValue_toStringTyped(val);
             fprintf(stderr, "VM: [%s] READ %s.%s[%d] -> %s\n", ctx->currentCodeName, scopeName, varDef->name, access.arrayIndex, rvalueAsString);
             free(rvalueAsString);
         }
@@ -801,7 +801,7 @@ static void handlePushScoped(VMContext* ctx, uint32_t instr, const uint8_t* extr
         val = variables[varDef->varID];
         val.ownsString = false; // Non-owning copy
         if (shouldTraceVariable(traceMap, scopeName, altScopeName, varDef->name)) {
-            char* rvalueAsString = RValue_toString(val);
+            char* rvalueAsString = RValue_toStringTyped(val);
             fprintf(stderr, "VM: [%s] READ %s.%s -> %s\n", ctx->currentCodeName, scopeName, varDef->name, rvalueAsString);
             free(rvalueAsString);
         }
