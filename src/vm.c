@@ -873,8 +873,12 @@ static void handlePop(VMContext* ctx, uint32_t instr, const uint8_t* extraData) 
         val = stackPop(ctx);
     }
 
-    // Convert if source type differs from destination type
-    if (type2 != type1 && type1 != GML_TYPE_VARIABLE) {
+    // Convert if source type differs from destination type.
+    // For VARTYPE_ARRAY compound assignments (type1 != GML_TYPE_VARIABLE), the type1 field
+    // indicates the stack layout (compound vs simple), NOT a type conversion target.
+    // Skip conversion in that case to preserve string values through += operations.
+    bool isCompoundArrayAssignment = (varType == VARTYPE_ARRAY && type1 != GML_TYPE_VARIABLE);
+    if (type2 != type1 && type1 != GML_TYPE_VARIABLE && !isCompoundArrayAssignment) {
         RValue converted = convertValue(val, type1);
         RValue_free(&val);
         val = converted;
@@ -1908,6 +1912,10 @@ CodeLocals* VM_resolveCodeLocals(VMContext* ctx, const char* codeName) {
 RValue VM_callCodeIndex(VMContext* ctx, int32_t codeIndex, RValue* args, int32_t argCount) {
     require(codeIndex >= 0 && ctx->dataWin->code.count > (uint32_t) codeIndex);
     CodeEntry* code = &ctx->dataWin->code.entries[codeIndex];
+    if (strstr(code->name, "INSTAWRITER") != nullptr || strstr(code->name, "OBJ_WRITER_Create") != nullptr) {
+        Instance* inst = (Instance*) ctx->currentInstance;
+        fprintf(stderr, "DEBUG VM_callCodeIndex: %s (codeIndex=%d, instId=%d)\n", code->name, codeIndex, inst ? inst->instanceId : -1);
+    }
 
     // Save current frame
     CallFrame* frame = malloc(sizeof(CallFrame));
