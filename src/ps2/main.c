@@ -128,7 +128,8 @@ int main(int argc, char* argv[]) {
             .parseFunc = true,
             .parseStrg = true,
             .parseTxtr = false,
-            .parseAudo = false
+            .parseAudo = false,
+            .skipLoadingPreciseMasksForNonPreciseSprites = true
         }
     );
 

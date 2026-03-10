@@ -27,6 +27,8 @@ typedef struct {
     bool parseStrg;
     bool parseTxtr;
     bool parseAudo;
+    // If true, precise masks will be skipped when the sprite does not have a precise state set
+    bool skipLoadingPreciseMasksForNonPreciseSprites;
 } DataWinParserOptions;
 
 // ===[ GEN8 - General Info ]===

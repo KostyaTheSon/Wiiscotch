@@ -457,7 +457,7 @@ static void parseAGRP(BinaryReader* reader, DataWin* dw) {
     free(ptrs);
 }
 
-static void parseSPRT(BinaryReader* reader, DataWin* dw) {
+static void parseSPRT(BinaryReader* reader, DataWin* dw, bool skipLoadingPreciseMasksForNonPreciseSprites) {
     Sprt* s = &dw->sprt;
 
     uint32_t count;
@@ -515,14 +515,26 @@ static void parseSPRT(BinaryReader* reader, DataWin* dw) {
         if (maskDataCount > 0 && spr->width > 0 && spr->height > 0) {
             uint32_t bytesPerRow = (spr->width + 7) / 8;
             uint32_t bytesPerMask = bytesPerRow * spr->height;
-            spr->masks = malloc(maskDataCount * sizeof(uint8_t*));
-            repeat(maskDataCount, j) {
-                spr->masks[j] = malloc(bytesPerMask);
-                BinaryReader_readBytes(reader, spr->masks[j], bytesPerMask);
-                // Skip padding to 4-byte alignment
-                uint32_t remainder = bytesPerMask % 4;
-                if (remainder != 0) {
-                    BinaryReader_skip(reader, 4 - remainder);
+
+            if (spr->sepMasks == 1 || !skipLoadingPreciseMasksForNonPreciseSprites) {
+                spr->masks = malloc(maskDataCount * sizeof(uint8_t*));
+                repeat(maskDataCount, j) {
+                    spr->masks[j] = malloc(bytesPerMask);
+                    BinaryReader_readBytes(reader, spr->masks[j], bytesPerMask);
+                    // Skip padding to 4-byte alignment
+                    uint32_t remainder = bytesPerMask % 4;
+                    if (remainder != 0) {
+                        BinaryReader_skip(reader, 4 - remainder);
+                    }
+                }
+            } else {
+                repeat(maskDataCount, j) {
+                    BinaryReader_skip(reader, bytesPerMask);
+                    // Skip padding to 4-byte alignment
+                    uint32_t remainder = bytesPerMask % 4;
+                    if (remainder != 0) {
+                        BinaryReader_skip(reader, 4 - remainder);
+                    }
                 }
             }
         } else {
@@ -1348,7 +1360,7 @@ DataWin* DataWin_parse(const char* filePath, DataWinParserOptions options) {
         } else if (options.parseAgrp && memcmp(chunkName, "AGRP", 4) == 0) {
             parseAGRP(&reader, dw);
         } else if (options.parseSprt && memcmp(chunkName, "SPRT", 4) == 0) {
-            parseSPRT(&reader, dw);
+            parseSPRT(&reader, dw, options.skipLoadingPreciseMasksForNonPreciseSprites);
         } else if (options.parseBgnd && memcmp(chunkName, "BGND", 4) == 0) {
             parseBGND(&reader, dw);
         } else if (options.parsePath && memcmp(chunkName, "PATH", 4) == 0) {

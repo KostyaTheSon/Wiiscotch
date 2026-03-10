@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <malloc.h>
 
 #include "runner_keyboard.h"
 #include "runner.h"
@@ -375,12 +376,18 @@ int main(int argc, char* argv[]) {
             .parseFunc = true,
             .parseStrg = true,
             .parseTxtr = true,
-            .parseAudo = true
+            .parseAudo = true,
+            .skipLoadingPreciseMasksForNonPreciseSprites = false
         }
     );
 
     Gen8* gen8 = &dataWin->gen8;
     printf("Loaded \"%s\" (%d) successfully!\n", gen8->name, gen8->gameID);
+
+    {
+        struct mallinfo2 mi = mallinfo2();
+        printf("Memory after data.win parsing: used=%zu bytes (%.1f KB)\n", mi.uordblks, mi.uordblks / 1024.0f);
+    }
 
     // Build window title
     char windowTitle[256];
