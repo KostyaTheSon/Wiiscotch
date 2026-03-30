@@ -19,7 +19,9 @@
 #include "../data_win.h"
 #include "../json_reader.h"
 #include "ps2_file_system.h"
+#ifndef DISABLE_PS2_AUDIO
 #include "ps2_audio_system.h"
+#endif
 #include "gs_renderer.h"
 #include "noop_audio_system.h"
 #include "ps2_utils.h"
@@ -38,10 +40,12 @@ extern unsigned char mcserv_irx[];
 extern unsigned int size_mcserv_irx;
 extern unsigned char padman_irx[];
 extern unsigned int size_padman_irx;
+#ifndef DISABLE_PS2_AUDIO
 extern unsigned char freesd_irx[];
 extern unsigned int size_freesd_irx;
 extern unsigned char audsrv_irx[];
 extern unsigned int size_audsrv_irx;
+#endif
 
 // The maximum memory of a normal PS2 console
 // Developer consoles may have more memory, but because ps2sdk does not have a way to know
@@ -314,6 +318,7 @@ int main(int argc, char* argv[]) {
     padInit(0);
     padPortOpen(0, 0, padBuf);
 
+#ifndef DISABLE_PS2_AUDIO
     // ===[ Load Audio IOP Modules ]===
     ret = SifExecModuleBuffer(freesd_irx, size_freesd_irx, 0, nullptr, nullptr);
     if (0 > ret) {
@@ -323,6 +328,7 @@ int main(int argc, char* argv[]) {
     if (0 > ret) {
         printf("Failed to load audsrv: %d\n", ret);
     }
+#endif
 
     // Wait for pad to be ready
     drawStatusScreen(gsGlobal, gsFontM, nullptr, "Waiting for controller...", nullptr);
@@ -475,11 +481,15 @@ int main(int argc, char* argv[]) {
     runner->renderer = renderer;
 
     // ===[ Initialize Audio System ]===
+#ifndef DISABLE_PS2_AUDIO
     drawStatusScreen(gsGlobal, gsFontM, dataWin->gen8.displayName, "Initializing audio...", &loadingState);
     Ps2AudioSystem* ps2Audio = Ps2AudioSystem_create();
     AudioSystem* audioSystem = (AudioSystem*) ps2Audio;
     audioSystem->vtable->init(audioSystem, dataWin, fileSystem);
     runner->audioSystem = audioSystem;
+#else
+    runner->audioSystem = (AudioSystem*) NoopAudioSystem_create();
+#endif
 
     drawStatusScreen(gsGlobal, gsFontM, dataWin->gen8.displayName, "Initializing renderer...", &loadingState);
     renderer->vtable->init(renderer, dataWin);

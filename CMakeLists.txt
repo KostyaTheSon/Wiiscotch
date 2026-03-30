@@ -77,6 +77,12 @@ elseif(PLATFORM STREQUAL "ps2")
     add_compile_definitions(NO_RVALUE_INT64)
     # Disable Butterscotch VM/interpreter tracing checks
     add_compile_definitions(DISABLE_VM_TRACING)
+    # Disable the PS2 audio system
+    option(DISABLE_PS2_AUDIO "Disable the PS2 audio system" OFF)
+    if(DISABLE_PS2_AUDIO)
+        add_compile_definitions(DISABLE_PS2_AUDIO)
+        list(REMOVE_ITEM PLATFORM_SOURCES ${CMAKE_SOURCE_DIR}/src/ps2/ps2_audio_system.c)
+    endif()
     # Treat unsuffixed float constants as single-precision to avoid accidental
     # float->double promotions on platforms with no hardware double
     add_compile_options(-fsingle-precision-constant)
@@ -117,20 +123,25 @@ elseif(PLATFORM STREQUAL "ps2")
             DEPENDS ${IRX_DIR}/padman.irx
             COMMENT "Embedding padman.irx"
         )
-        add_custom_command(
-            OUTPUT ${IRX_GEN_DIR}/freesd_irx.c
-            COMMAND $ENV{PS2SDK}/bin/bin2c ${IRX_DIR}/freesd.irx ${IRX_GEN_DIR}/freesd_irx.c freesd_irx
-            DEPENDS ${IRX_DIR}/freesd.irx
-            COMMENT "Embedding freesd.irx"
-        )
-        add_custom_command(
-            OUTPUT ${IRX_GEN_DIR}/audsrv_irx.c
-            COMMAND $ENV{PS2SDK}/bin/bin2c ${IRX_DIR}/audsrv.irx ${IRX_GEN_DIR}/audsrv_irx.c audsrv_irx
-            DEPENDS ${IRX_DIR}/audsrv.irx
-            COMMENT "Embedding audsrv.irx"
-        )
+        if(NOT DISABLE_PS2_AUDIO)
+            add_custom_command(
+                OUTPUT ${IRX_GEN_DIR}/freesd_irx.c
+                COMMAND $ENV{PS2SDK}/bin/bin2c ${IRX_DIR}/freesd.irx ${IRX_GEN_DIR}/freesd_irx.c freesd_irx
+                DEPENDS ${IRX_DIR}/freesd.irx
+                COMMENT "Embedding freesd.irx"
+            )
+            add_custom_command(
+                OUTPUT ${IRX_GEN_DIR}/audsrv_irx.c
+                COMMAND $ENV{PS2SDK}/bin/bin2c ${IRX_DIR}/audsrv.irx ${IRX_GEN_DIR}/audsrv_irx.c audsrv_irx
+                DEPENDS ${IRX_DIR}/audsrv.irx
+                COMMENT "Embedding audsrv.irx"
+            )
+        endif()
 
-        target_sources(butterscotch PRIVATE ${IRX_GEN_DIR}/sio2man_irx.c ${IRX_GEN_DIR}/mcman_irx.c ${IRX_GEN_DIR}/mcserv_irx.c ${IRX_GEN_DIR}/padman_irx.c ${IRX_GEN_DIR}/freesd_irx.c ${IRX_GEN_DIR}/audsrv_irx.c)
+        target_sources(butterscotch PRIVATE ${IRX_GEN_DIR}/sio2man_irx.c ${IRX_GEN_DIR}/mcman_irx.c ${IRX_GEN_DIR}/mcserv_irx.c ${IRX_GEN_DIR}/padman_irx.c)
+        if(NOT DISABLE_PS2_AUDIO)
+            target_sources(butterscotch PRIVATE ${IRX_GEN_DIR}/freesd_irx.c ${IRX_GEN_DIR}/audsrv_irx.c)
+        endif()
         target_include_directories(butterscotch PRIVATE ${IRX_GEN_DIR})
 
         # ===[ gprof Profiling Support ]===
