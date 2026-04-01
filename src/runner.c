@@ -1001,7 +1001,7 @@ static void updateViews(Runner* runner) {
         int32_t count = (int32_t) arrlen(runner->instances);
         for (int32_t i = 0; count > i; i++) {
             Instance* inst = runner->instances[i];
-            if (inst->active && inst->objectIndex == view->objectId) { target = inst; break; }
+            if (inst->active && VM_isObjectOrDescendant(runner->dataWin, inst->objectIndex, view->objectId)) { target = inst; break; };
         }
         if (target == nullptr) continue;
 

@@ -309,6 +309,18 @@ RValue VMBuiltins_getVariable(VMContext* ctx, const char* name, int32_t arrayInd
             }
             return RValue_makeReal(-4.0);
         }
+        if (strcmp(name, "view_hspeed") == 0) {
+            if (arrayIndex >= 0 && MAX_VIEWS > arrayIndex) {
+                return RValue_makeReal((GMLReal) runner->currentRoom->views[arrayIndex].speedX);
+            }
+            return RValue_makeReal(0.0);
+        }
+        if (strcmp(name, "view_vspeed") == 0) {
+            if (arrayIndex >= 0 && MAX_VIEWS > arrayIndex) {
+                return RValue_makeReal((GMLReal) runner->currentRoom->views[arrayIndex].speedY);
+            }
+            return RValue_makeReal(0.0);
+        }
 
         // Background properties
         if (strcmp(name, "background_visible") == 0) {
@@ -571,6 +583,18 @@ void VMBuiltins_setVariable(VMContext* ctx, const char* name, RValue val, int32_
     if (strcmp(name, "view_object") == 0) {
         if (arrayIndex >= 0 && MAX_VIEWS > arrayIndex) {
             runner->currentRoom->views[arrayIndex].objectId = RValue_toInt32(val);
+        }
+        return;
+    }
+    if (strcmp(name, "view_hspeed") == 0) {
+        if (arrayIndex >= 0 && MAX_VIEWS > arrayIndex) {
+            runner->currentRoom->views[arrayIndex].speedX = RValue_toInt32(val);
+        }
+        return;
+    }
+    if (strcmp(name, "view_vspeed") == 0) {
+        if (arrayIndex >= 0 && MAX_VIEWS > arrayIndex) {
+            runner->currentRoom->views[arrayIndex].speedY = RValue_toInt32(val);
         }
         return;
     }
