@@ -97,7 +97,7 @@ int main(int argc, char* argv[]) {
     initVideo();
     initPad();
     
-    // Initialize USB keyboard support
+    // Initialize keyboard support (USB HID via manual implementation + controller mappings)
     WiiKeyboard_init();
     
     // Initialize FAT for file access

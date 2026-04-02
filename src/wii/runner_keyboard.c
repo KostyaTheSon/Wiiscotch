@@ -1,12 +1,13 @@
 #include "runner_keyboard.h"
 #include "../runner.h"
 #include <ogc/pad.h>
+#include <wiikeyboard/keyboard.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 
-// USB Keyboard support is deprecated/removed in modern libogc.
-// We rely on Wii Remote (WPAD) and GameCube Controller (PAD) instead.
+// Keyboard input handling for Wii using libwiikeyboard (part of libogc)
+// Handles USB Keyboard via libwiikeyboard and GameCube/Wii controllers via PAD
 
 // Wii controller button mappings to GML key codes
 typedef struct {
@@ -47,79 +48,61 @@ static PadMapping classicMappings[] = {
     { 0, 0 }
 };
 
-// USB Keyboard scan code to GML key mappings (subset of common keys)
-static const uint16_t usbKeyToGml[] = {
-    [0x04] = 65,   // A
-    [0x05] = 66,   // B
-    [0x06] = 67,   // C
-    [0x07] = 68,   // D
-    [0x08] = 69,   // E
-    [0x09] = 70,   // F
-    [0x0A] = 71,   // G
-    [0x0B] = 72,   // H
-    [0x0C] = 73,   // I
-    [0x0D] = 74,   // J
-    [0x0E] = 75,   // K
-    [0x0F] = 76,   // L
-    [0x10] = 77,   // M
-    [0x11] = 78,   // N
-    [0x12] = 79,   // O
-    [0x13] = 80,   // P
-    [0x14] = 81,   // Q
-    [0x15] = 82,   // R
-    [0x16] = 83,   // S
-    [0x17] = 84,   // T
-    [0x18] = 85,   // U
-    [0x19] = 86,   // V
-    [0x1A] = 87,   // W
-    [0x1B] = 88,   // X
-    [0x1C] = 89,   // Y
-    [0x1D] = 90,   // Z
-    [0x1E] = 49,   // 1
-    [0x1F] = 50,   // 2
-    [0x20] = 51,   // 3
-    [0x21] = 52,   // 4
-    [0x22] = 53,   // 5
-    [0x23] = 54,   // 6
-    [0x24] = 55,   // 7
-    [0x25] = 56,   // 8
-    [0x26] = 57,   // 9
-    [0x27] = 48,   // 0
-    [0x28] = 13,   // Enter
-    [0x29] = 27,   // Escape
-    [0x2A] = 8,    // Backspace
-    [0x2B] = 9,    // Tab
-    [0x2C] = 32,   // Space
-    [0x2D] = 45,   // Minus
-    [0x2E] = 61,   // Equal
-    [0x2F] = 91,   // Left Bracket
-    [0x30] = 93,   // Right Bracket
-    [0x31] = 92,   // Backslash
-    [0x33] = 59,   // Semicolon
-    [0x34] = 39,   // Quote
-    [0x35] = 96,   // Grave
-    [0x36] = 44,   // Comma
-    [0x37] = 46,   // Period
-    [0x38] = 47,   // Slash
-    [0x39] = 304,  // Left Shift
-    [0x3A] = 304,  // Right Shift
-    [0xE0] = 306,  // Left Control
-    [0xE4] = 306,  // Right Control
-    [0xE2] = 308,  // Left Alt
-    [0xE6] = 308,  // Right Alt
-    [0x52] = 273,  // Up Arrow
-    [0x51] = 274,  // Down Arrow
-    [0x50] = 276,  // Left Arrow
-    [0x4F] = 275,  // Right Arrow
-};
+// Convert libwiikeyboard scancode to GML key code
+static int32_t convertScancodeToGml(char sym) {
+    // Direct ASCII characters (printable)
+    if (sym >= 32 && sym <= 126) {
+        return sym;
+    }
+    
+    // Special keys based on libwiikeyboard scancodes
+    switch (sym) {
+        case 13:  return 13;   // Enter
+        case 27:  return 27;   // Escape
+        case 8:   return 8;    // Backspace
+        case 9:   return 9;    // Tab
+        case 127: return 46;   // Delete
+        case 128: return 273;  // Up arrow
+        case 129: return 274;  // Down arrow
+        case 130: return 276;  // Left arrow
+        case 131: return 275;  // Right arrow
+        case 132: return 278;  // Insert
+        case 133: return 279;  // Home
+        case 134: return 280;  // End
+        case 135: return 281;  // Page Up
+        case 136: return 282;  // Page Down
+        case 137: return 112;  // F1
+        case 138: return 113;  // F2
+        case 139: return 114;  // F3
+        case 140: return 115;  // F4
+        case 141: return 116;  // F5
+        case 142: return 117;  // F6
+        case 143: return 118;  // F7
+        case 144: return 119;  // F8
+        case 145: return 120;  // F9
+        case 146: return 121;  // F10
+        case 147: return 122;  // F11
+        case 148: return 123;  // F12
+        case 149: return 304;  // Left Shift
+        case 150: return 304;  // Right Shift
+        case 151: return 306;  // Left Control
+        case 152: return 306;  // Right Control
+        case 153: return 308;  // Left Alt
+        case 154: return 308;  // Right Alt
+        default:  return -1;   // Unknown key
+    }
+}
 
 void WiiKeyboard_init(void) {
-    // USB Keyboard initialization removed - not supported in modern libogc
+    // Initialize USB keyboard using libwiikeyboard
+    KEYBOARD_Init(NULL);
+    printf("USB Keyboard initialized via libwiikeyboard\n");
     // GameCube and Wii Remote controllers are initialized in main.c
 }
 
 bool WiiKeyboard_isConnected(void) {
-    // Always return true since we have GameCube controller support
+    // libwiikeyboard doesn't provide a direct connection check
+    // Assume connected if initialized successfully
     return true;
 }
 
@@ -133,14 +116,25 @@ static int32_t mapPadButton(uint16_t button, bool isClassic) {
     return -1;
 }
 
-static int32_t mapUsbKey(uint8_t usbCode) {
-    if (usbCode < sizeof(usbKeyToGml) / sizeof(usbKeyToGml[0])) {
-        return usbKeyToGml[usbCode];
-    }
-    return -1;
-}
-
 void WiiKeyboard_processInput(uint16_t currentButtons, uint16_t prevButtons) {
+    // Process USB keyboard input via libwiikeyboard
+    keyboard_event ke;
+    s32 res = KEYBOARD_GetEvent(&ke);
+    while (res) {
+        if (ke.type == KEYBOARD_PRESSED) {
+            int32_t gmlKey = convertScancodeToGml(ke.sym);
+            if (gmlKey > 0) {
+                Runner_keyPressed(gmlKey);
+            }
+        } else if (ke.type == KEYBOARD_RELEASED) {
+            int32_t gmlKey = convertScancodeToGml(ke.sym);
+            if (gmlKey > 0) {
+                Runner_keyReleased(gmlKey);
+            }
+        }
+        res = KEYBOARD_GetEvent(&ke);
+    }
+    
     // Detect controller type (Classic Controller or standard Wiimote)
     uint32_t expType = PAD_Expansion(0);
     bool isClassic = (expType == PAD_EXP_CLASSIC);
@@ -214,39 +208,6 @@ void WiiKeyboard_processInput(uint16_t currentButtons, uint16_t prevButtons) {
             Runner_keyDown(274); // Down
         } else if (stick.y > 30) {
             Runner_keyDown(273); // Up
-        }
-    }
-    
-    // Handle USB Keyboard input
-    if (USB_IsKeyboardConnected()) {
-        static uint8_t prevKeys[6] = {0};
-        uint8_t currentKeys[6];
-        uint8_t modifiers;
-        
-        if (USB_GetKeys(currentKeys, &modifiers) == 0) {
-            // Check for newly pressed keys
-            for (int i = 0; i < 6; i++) {
-                if (currentKeys[i] != 0 && currentKeys[i] != prevKeys[i]) {
-                    int32_t gmlKey = mapUsbKey(currentKeys[i]);
-                    if (gmlKey >= 0) {
-                        Runner_keyPressed(gmlKey);
-                        Runner_keyDown(gmlKey);
-                    }
-                }
-            }
-            
-            // Check for released keys
-            for (int i = 0; i < 6; i++) {
-                if (prevKeys[i] != 0 && prevKeys[i] != currentKeys[i]) {
-                    int32_t gmlKey = mapUsbKey(prevKeys[i]);
-                    if (gmlKey >= 0) {
-                        Runner_keyReleased(gmlKey);
-                    }
-                }
-            }
-            
-            // Copy current keys to previous
-            memcpy(prevKeys, currentKeys, 6);
         }
     }
 }

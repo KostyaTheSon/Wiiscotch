@@ -231,7 +231,7 @@ elseif(PLATFORM STREQUAL "wii")
             $ENV{DEVKITPRO}/portlibs/wii/include
         )
         target_link_directories(wiiscotch PRIVATE $ENV{DEVKITPRO}/libogc/lib/wii)
-        target_link_libraries(wiiscotch ogc m fat)
+        target_link_libraries(wiiscotch wiikeyboard ogc m fat)
         
         # Set Wii-specific flags
         target_compile_definitions(wiiscotch PRIVATE GEKKO HW_DOL)
