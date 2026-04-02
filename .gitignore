@@ -1,36 +1,43 @@
 ```
 # Build artifacts
-build/
-CMakeFiles/
-*.cmake
-Makefile
-cmake_install.cmake
-
-# Compiled files
 *.o
 *.obj
 *.a
-*.lib
 *.so
-*.dylib
 *.dll
 *.exe
 *.out
 
-# Dependencies
-.venv/
-venv/
-env/
-node_modules/
+# C/C++ specific
+*.i
+*.s
+*.ii
+*.sii
+*.gcno
+*.gcda
+*.gcov
 
-# Logs
+# Temporary files
+*.tmp
+*.temp
 *.log
 
-# Editors
+# IDE files
 .vscode/
 .idea/
 *.swp
 *.swo
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build directories
+build/
+cmake-build-*/
+dist/
+bin/
+lib/
 
 # Environment
 .env
@@ -39,10 +46,11 @@ node_modules/
 
 # Coverage
 coverage/
-htmlcov/
+*.coverage
 .coverage
+htmlcov/
 
-# CMake specific
-CMakeCache.txt
-cmake-build-*/
+# OS generated files
+.DS_Store
+Thumbs.db
 ```
