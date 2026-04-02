@@ -20,8 +20,19 @@
 #include "wii_utils.h"
 #include "utils.h"
 
-// Maximum memory available on Wii (approximately 88MB usable for applications)
-static const uint32_t MAX_MEMORY_BYTES = 88 * 1024 * 1024;
+// Wii Memory Architecture:
+// - MEM1: 24 MB (0x80000000 - 0x81800000) - Fast access, used for code and frequently accessed data
+// - MEM2: 64 MB (0x90000000 - 0x94000000) - Slower access, used for textures, audio, and large buffers
+// Total: 88 MB usable for applications
+
+// Memory limits for allocation tracking
+static const uint32_t MEM1_SIZE = 24 * 1024 * 1024;      // 24 MB MEM1
+static const uint32_t MEM2_SIZE = 64 * 1024 * 1024;      // 64 MB MEM2
+static const uint32_t MAX_MEMORY_BYTES = 88 * 1024 * 1024; // Total available
+
+// Track memory usage separately for MEM1 and MEM2
+static uint32_t mem1Used = 0;
+static uint32_t mem2Used = 0;
 
 // Controller button to GML key mapping
 typedef struct {
@@ -151,13 +162,20 @@ int main(int argc, char* argv[]) {
     initVideo();
     initPad();
     
+    // Initialize USB keyboard support
+    WiiKeyboard_init();
+    
     // Initialize FAT for file access
     if (!fatInitDefault()) {
         printf("Failed to initialize FAT filesystem\n");
         return 1;
     }
     
-    printf("Butterscotch Wii - Starting...\n");
+    // Initialize memory tracking utilities
+    WiiUtils_init();
+    
+    printf("Wiiscotch - Starting...\n");
+    WiiUtils_printMemoryStatus("Startup");
     
     // Determine data.win path
     const char* dataWinPath = "sd:/data.win";
@@ -221,6 +239,7 @@ int main(int argc, char* argv[]) {
     }
     
     printf("\ndata.win loaded successfully!\n");
+    WiiUtils_printMemoryStatus("After data.win parsing");
     
     // ===[ Load CONFIG.JSN ]===
     printf("Loading CONFIG.JSN...\n");
@@ -266,6 +285,8 @@ int main(int argc, char* argv[]) {
     VMContext* vm = VM_create(dataWin);
     Runner* runner = Runner_create(dataWin, vm, fileSystem);
     
+    WiiUtils_printMemoryStatus("After VM and runner creation");
+    
     // Set up controller mappings
     printf("Initializing controller...\n");
     padMappings = NULL;
@@ -300,6 +321,9 @@ int main(int argc, char* argv[]) {
     Runner_destroy(runner);
     VM_destroy(vm);
     DataWin_free(dataWin);
+    
+    WiiUtils_printMemoryStatus("Shutdown");
+    WiiUtils_shutdown();
     
     return 0;
 }

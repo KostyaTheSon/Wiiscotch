@@ -223,9 +223,10 @@ elseif(PLATFORM STREQUAL "wii")
         target_include_directories(butterscotch PRIVATE 
             $ENV{DEVKITPRO}/libogc/include 
             $ENV{DEVKITPPC}/powerpc-eabi/include
+            $ENV{DEVKITPRO}/portlibs/wii/include
         )
         target_link_directories(butterscotch PRIVATE $ENV{DEVKITPRO}/libogc/lib/wii)
-        target_link_libraries(butterscotch ogc m)
+        target_link_libraries(butterscotch ogc m fat)
         
         # Set Wii-specific flags
         target_compile_definitions(butterscotch PRIVATE GEKKO HW_DOL)
