@@ -17,6 +17,8 @@ And that's where Wiiscotch comes in! Wiiscotch is an open source re-implementati
 
 **Wiiscotch** is a Nintendo Wii fork of Butterscotch, bringing GameMaker games to the Wii console using libogc and GX.
 
+**Wiiscotch** is a Nintendo Wii fork of Butterscotch, bringing GameMaker games to the Wii console using libogc and GX.
+
 **NOTE:** This is a homebrew project.
 
 ## Game Compatibility
@@ -152,6 +154,22 @@ When running Wiiscotch with `--debug`, the following hotkeys are enabled:
 ## Performance
 
 Performance is pretty good on any modern computer, but when running on low end targets (like the PS2 or Wii) it is *very* slow when there's a lot of instances on screen, or when a instance does a for loop.
+
+### Memory Management
+
+**Wiiscotch (Nintendo Wii)** features optimized memory management for the Wii's unique architecture:
+- **MEM1 (24 MB)**: Fast access memory used for code, VM data, and frequently accessed game objects
+- **MEM2 (64 MB)**: Slower access memory used for textures, audio buffers, and framebuffers
+- Total available: **88 MB** for applications
+
+The memory system tracks allocations in both MEM1 and MEM2 separately, providing debug output at key points:
+- Startup initialization
+- After loading data.win
+- After VM and runner creation  
+- After framebuffer allocation
+- At shutdown
+
+This allows developers to monitor memory usage and optimize games for the Wii's constrained environment.
 
 The Wii target uses float reals for better performance on the PowerPC FPU.
 

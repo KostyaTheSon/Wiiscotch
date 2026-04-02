@@ -1,4 +1,5 @@
 #include "gx_renderer.h"
+#include "wii_utils.h"
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -96,9 +97,11 @@ Renderer* GxRenderer_create(GXRModeObj* vmode) {
     gr->vmode = vmode;
     gr->whichXfb = 0;
     
-    // Allocate framebuffers
+    // Allocate framebuffers in MEM2 for better performance with GX
     gr->xfb[0] = MEM_K0_TO_K1(MEM_AllocFramebuffer(vmode));
     gr->xfb[1] = MEM_K0_TO_K1(MEM_AllocFramebuffer(vmode));
+    
+    WiiUtils_printMemoryStatus("After framebuffer allocation");
     
     // Initialize GX
     GX_Init(NULL, 0);
