@@ -17,8 +17,6 @@ And that's where Wiiscotch comes in! Wiiscotch is an open source re-implementati
 
 **Wiiscotch** is a Nintendo Wii fork of Butterscotch, bringing GameMaker games to the Wii console using libogc and GX.
 
-**Wiiscotch** is a Nintendo Wii fork of Butterscotch, bringing GameMaker games to the Wii console using libogc and GX.
-
 **NOTE:** This is a homebrew project.
 
 ## Game Compatibility
