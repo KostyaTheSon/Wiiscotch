@@ -2859,6 +2859,22 @@ static RValue builtinActionMoveTo(VMContext* ctx, MAYBE_UNUSED RValue* args, MAY
     return RValue_makeUndefined();
 }
 
+static RValue builtinActionSnap(VMContext* ctx, MAYBE_UNUSED RValue* args, MAYBE_UNUSED int32_t argCount) {
+    GMLReal hsnap = RValue_toReal(args[0]);
+    GMLReal vsnap = RValue_toReal(args[1]);
+
+    if (ctx->currentInstance != nullptr) {
+        Instance* inst = (Instance*) ctx->currentInstance;
+        if (hsnap > 0.0) {
+            inst->x = (float) ((int32_t) GMLReal_round(inst->x / hsnap) * hsnap);
+        }
+        if (vsnap > 0.0) {
+            inst->y = (float) ((int32_t) GMLReal_round(inst->y / vsnap) * vsnap);
+        }
+    }
+    return RValue_makeUndefined();
+}
+
 static RValue builtinActionSetFriction(VMContext* ctx, MAYBE_UNUSED RValue* args, MAYBE_UNUSED int32_t argCount) {
     GMLReal val = RValue_toReal(args[0]);
 
@@ -4637,6 +4653,7 @@ void VMBuiltins_registerAll(bool isGMS2) {
     registerBuiltin("action_set_relative", builtinActionSetRelative);
     registerBuiltin("action_move", builtinActionMove);
     registerBuiltin("action_move_to", builtinActionMoveTo);
+    registerBuiltin("action_snap", builtinActionSnap);
     registerBuiltin("action_set_friction", builtinActionSetFriction);
     registerBuiltin("action_set_gravity", builtinActionSetGravity);
     registerBuiltin("action_set_hspeed", builtinActionSetHspeed);
