@@ -129,6 +129,19 @@ wiiscotch/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/build
 .PHONY : wiiscotch/fast
 
+#=============================================================================
+# Target rules for targets named glad
+
+# Build rule for target.
+glad: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 glad
+.PHONY : glad
+
+# fast build rule for target.
+glad/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glad.dir/build.make CMakeFiles/glad.dir/build
+.PHONY : glad/fast
+
 src/binary_reader.o: src/binary_reader.c.o
 .PHONY : src/binary_reader.o
 
@@ -200,6 +213,126 @@ src/data_win_print.s: src/data_win_print.c.s
 src/data_win_print.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/data_win_print.c.s
 .PHONY : src/data_win_print.c.s
+
+src/glfw/gl_renderer.o: src/glfw/gl_renderer.c.o
+.PHONY : src/glfw/gl_renderer.o
+
+# target to build an object file
+src/glfw/gl_renderer.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.o
+.PHONY : src/glfw/gl_renderer.c.o
+
+src/glfw/gl_renderer.i: src/glfw/gl_renderer.c.i
+.PHONY : src/glfw/gl_renderer.i
+
+# target to preprocess a source file
+src/glfw/gl_renderer.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.i
+.PHONY : src/glfw/gl_renderer.c.i
+
+src/glfw/gl_renderer.s: src/glfw/gl_renderer.c.s
+.PHONY : src/glfw/gl_renderer.s
+
+# target to generate assembly for a file
+src/glfw/gl_renderer.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.s
+.PHONY : src/glfw/gl_renderer.c.s
+
+src/glfw/glfw_file_system.o: src/glfw/glfw_file_system.c.o
+.PHONY : src/glfw/glfw_file_system.o
+
+# target to build an object file
+src/glfw/glfw_file_system.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.o
+.PHONY : src/glfw/glfw_file_system.c.o
+
+src/glfw/glfw_file_system.i: src/glfw/glfw_file_system.c.i
+.PHONY : src/glfw/glfw_file_system.i
+
+# target to preprocess a source file
+src/glfw/glfw_file_system.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.i
+.PHONY : src/glfw/glfw_file_system.c.i
+
+src/glfw/glfw_file_system.s: src/glfw/glfw_file_system.c.s
+.PHONY : src/glfw/glfw_file_system.s
+
+# target to generate assembly for a file
+src/glfw/glfw_file_system.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.s
+.PHONY : src/glfw/glfw_file_system.c.s
+
+src/glfw/ma_audio_system.o: src/glfw/ma_audio_system.c.o
+.PHONY : src/glfw/ma_audio_system.o
+
+# target to build an object file
+src/glfw/ma_audio_system.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.o
+.PHONY : src/glfw/ma_audio_system.c.o
+
+src/glfw/ma_audio_system.i: src/glfw/ma_audio_system.c.i
+.PHONY : src/glfw/ma_audio_system.i
+
+# target to preprocess a source file
+src/glfw/ma_audio_system.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.i
+.PHONY : src/glfw/ma_audio_system.c.i
+
+src/glfw/ma_audio_system.s: src/glfw/ma_audio_system.c.s
+.PHONY : src/glfw/ma_audio_system.s
+
+# target to generate assembly for a file
+src/glfw/ma_audio_system.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.s
+.PHONY : src/glfw/ma_audio_system.c.s
+
+src/glfw/main.o: src/glfw/main.c.o
+.PHONY : src/glfw/main.o
+
+# target to build an object file
+src/glfw/main.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/glfw/main.c.o
+.PHONY : src/glfw/main.c.o
+
+src/glfw/main.i: src/glfw/main.c.i
+.PHONY : src/glfw/main.i
+
+# target to preprocess a source file
+src/glfw/main.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/glfw/main.c.i
+.PHONY : src/glfw/main.c.i
+
+src/glfw/main.s: src/glfw/main.c.s
+.PHONY : src/glfw/main.s
+
+# target to generate assembly for a file
+src/glfw/main.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/glfw/main.c.s
+.PHONY : src/glfw/main.c.s
+
+src/glfw/stb_impl.o: src/glfw/stb_impl.c.o
+.PHONY : src/glfw/stb_impl.o
+
+# target to build an object file
+src/glfw/stb_impl.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.o
+.PHONY : src/glfw/stb_impl.c.o
+
+src/glfw/stb_impl.i: src/glfw/stb_impl.c.i
+.PHONY : src/glfw/stb_impl.i
+
+# target to preprocess a source file
+src/glfw/stb_impl.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.i
+.PHONY : src/glfw/stb_impl.c.i
+
+src/glfw/stb_impl.s: src/glfw/stb_impl.c.s
+.PHONY : src/glfw/stb_impl.s
+
+# target to generate assembly for a file
+src/glfw/stb_impl.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.s
+.PHONY : src/glfw/stb_impl.c.s
 
 src/ini.o: src/ini.c.o
 .PHONY : src/ini.o
@@ -465,149 +598,29 @@ src/vm_builtins.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/vm_builtins.c.s
 .PHONY : src/vm_builtins.c.s
 
-src/wii/gx_renderer.o: src/wii/gx_renderer.c.o
-.PHONY : src/wii/gx_renderer.o
+vendor/glad/src/glad.o: vendor/glad/src/glad.c.o
+.PHONY : vendor/glad/src/glad.o
 
 # target to build an object file
-src/wii/gx_renderer.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.o
-.PHONY : src/wii/gx_renderer.c.o
+vendor/glad/src/glad.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glad.dir/build.make CMakeFiles/glad.dir/vendor/glad/src/glad.c.o
+.PHONY : vendor/glad/src/glad.c.o
 
-src/wii/gx_renderer.i: src/wii/gx_renderer.c.i
-.PHONY : src/wii/gx_renderer.i
-
-# target to preprocess a source file
-src/wii/gx_renderer.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.i
-.PHONY : src/wii/gx_renderer.c.i
-
-src/wii/gx_renderer.s: src/wii/gx_renderer.c.s
-.PHONY : src/wii/gx_renderer.s
-
-# target to generate assembly for a file
-src/wii/gx_renderer.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.s
-.PHONY : src/wii/gx_renderer.c.s
-
-src/wii/main.o: src/wii/main.c.o
-.PHONY : src/wii/main.o
-
-# target to build an object file
-src/wii/main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/main.c.o
-.PHONY : src/wii/main.c.o
-
-src/wii/main.i: src/wii/main.c.i
-.PHONY : src/wii/main.i
+vendor/glad/src/glad.i: vendor/glad/src/glad.c.i
+.PHONY : vendor/glad/src/glad.i
 
 # target to preprocess a source file
-src/wii/main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/main.c.i
-.PHONY : src/wii/main.c.i
+vendor/glad/src/glad.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glad.dir/build.make CMakeFiles/glad.dir/vendor/glad/src/glad.c.i
+.PHONY : vendor/glad/src/glad.c.i
 
-src/wii/main.s: src/wii/main.c.s
-.PHONY : src/wii/main.s
-
-# target to generate assembly for a file
-src/wii/main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/main.c.s
-.PHONY : src/wii/main.c.s
-
-src/wii/runner_keyboard.o: src/wii/runner_keyboard.c.o
-.PHONY : src/wii/runner_keyboard.o
-
-# target to build an object file
-src/wii/runner_keyboard.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.o
-.PHONY : src/wii/runner_keyboard.c.o
-
-src/wii/runner_keyboard.i: src/wii/runner_keyboard.c.i
-.PHONY : src/wii/runner_keyboard.i
-
-# target to preprocess a source file
-src/wii/runner_keyboard.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.i
-.PHONY : src/wii/runner_keyboard.c.i
-
-src/wii/runner_keyboard.s: src/wii/runner_keyboard.c.s
-.PHONY : src/wii/runner_keyboard.s
+vendor/glad/src/glad.s: vendor/glad/src/glad.c.s
+.PHONY : vendor/glad/src/glad.s
 
 # target to generate assembly for a file
-src/wii/runner_keyboard.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.s
-.PHONY : src/wii/runner_keyboard.c.s
-
-src/wii/wii_audio_system.o: src/wii/wii_audio_system.c.o
-.PHONY : src/wii/wii_audio_system.o
-
-# target to build an object file
-src/wii/wii_audio_system.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.o
-.PHONY : src/wii/wii_audio_system.c.o
-
-src/wii/wii_audio_system.i: src/wii/wii_audio_system.c.i
-.PHONY : src/wii/wii_audio_system.i
-
-# target to preprocess a source file
-src/wii/wii_audio_system.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.i
-.PHONY : src/wii/wii_audio_system.c.i
-
-src/wii/wii_audio_system.s: src/wii/wii_audio_system.c.s
-.PHONY : src/wii/wii_audio_system.s
-
-# target to generate assembly for a file
-src/wii/wii_audio_system.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.s
-.PHONY : src/wii/wii_audio_system.c.s
-
-src/wii/wii_file_system.o: src/wii/wii_file_system.c.o
-.PHONY : src/wii/wii_file_system.o
-
-# target to build an object file
-src/wii/wii_file_system.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.o
-.PHONY : src/wii/wii_file_system.c.o
-
-src/wii/wii_file_system.i: src/wii/wii_file_system.c.i
-.PHONY : src/wii/wii_file_system.i
-
-# target to preprocess a source file
-src/wii/wii_file_system.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.i
-.PHONY : src/wii/wii_file_system.c.i
-
-src/wii/wii_file_system.s: src/wii/wii_file_system.c.s
-.PHONY : src/wii/wii_file_system.s
-
-# target to generate assembly for a file
-src/wii/wii_file_system.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.s
-.PHONY : src/wii/wii_file_system.c.s
-
-src/wii/wii_utils.o: src/wii/wii_utils.c.o
-.PHONY : src/wii/wii_utils.o
-
-# target to build an object file
-src/wii/wii_utils.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.o
-.PHONY : src/wii/wii_utils.c.o
-
-src/wii/wii_utils.i: src/wii/wii_utils.c.i
-.PHONY : src/wii/wii_utils.i
-
-# target to preprocess a source file
-src/wii/wii_utils.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.i
-.PHONY : src/wii/wii_utils.c.i
-
-src/wii/wii_utils.s: src/wii/wii_utils.c.s
-.PHONY : src/wii/wii_utils.s
-
-# target to generate assembly for a file
-src/wii/wii_utils.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wiiscotch.dir/build.make CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.s
-.PHONY : src/wii/wii_utils.c.s
+vendor/glad/src/glad.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/glad.dir/build.make CMakeFiles/glad.dir/vendor/glad/src/glad.c.s
+.PHONY : vendor/glad/src/glad.c.s
 
 # Help Target
 help:
@@ -617,6 +630,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... glad"
 	@echo "... wiiscotch"
 	@echo "... src/binary_reader.o"
 	@echo "... src/binary_reader.i"
@@ -627,6 +641,21 @@ help:
 	@echo "... src/data_win_print.o"
 	@echo "... src/data_win_print.i"
 	@echo "... src/data_win_print.s"
+	@echo "... src/glfw/gl_renderer.o"
+	@echo "... src/glfw/gl_renderer.i"
+	@echo "... src/glfw/gl_renderer.s"
+	@echo "... src/glfw/glfw_file_system.o"
+	@echo "... src/glfw/glfw_file_system.i"
+	@echo "... src/glfw/glfw_file_system.s"
+	@echo "... src/glfw/ma_audio_system.o"
+	@echo "... src/glfw/ma_audio_system.i"
+	@echo "... src/glfw/ma_audio_system.s"
+	@echo "... src/glfw/main.o"
+	@echo "... src/glfw/main.i"
+	@echo "... src/glfw/main.s"
+	@echo "... src/glfw/stb_impl.o"
+	@echo "... src/glfw/stb_impl.i"
+	@echo "... src/glfw/stb_impl.s"
 	@echo "... src/ini.o"
 	@echo "... src/ini.i"
 	@echo "... src/ini.s"
@@ -660,24 +689,9 @@ help:
 	@echo "... src/vm_builtins.o"
 	@echo "... src/vm_builtins.i"
 	@echo "... src/vm_builtins.s"
-	@echo "... src/wii/gx_renderer.o"
-	@echo "... src/wii/gx_renderer.i"
-	@echo "... src/wii/gx_renderer.s"
-	@echo "... src/wii/main.o"
-	@echo "... src/wii/main.i"
-	@echo "... src/wii/main.s"
-	@echo "... src/wii/runner_keyboard.o"
-	@echo "... src/wii/runner_keyboard.i"
-	@echo "... src/wii/runner_keyboard.s"
-	@echo "... src/wii/wii_audio_system.o"
-	@echo "... src/wii/wii_audio_system.i"
-	@echo "... src/wii/wii_audio_system.s"
-	@echo "... src/wii/wii_file_system.o"
-	@echo "... src/wii/wii_file_system.i"
-	@echo "... src/wii/wii_file_system.s"
-	@echo "... src/wii/wii_utils.o"
-	@echo "... src/wii/wii_utils.i"
-	@echo "... src/wii/wii_utils.s"
+	@echo "... vendor/glad/src/glad.o"
+	@echo "... vendor/glad/src/glad.i"
+	@echo "... vendor/glad/src/glad.s"
 .PHONY : help
 
 

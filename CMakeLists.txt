@@ -215,13 +215,30 @@ elseif(PLATFORM STREQUAL "wii")
         set(WII TRUE)
     endif()
 
-    # The Wii has a PowerPC CPU with FPU, but we use float for performance
+    # The Wii's Broadway CPU (PowerPC-based) has a full FPU with double-precision support.
+    # However, GameMaker primarily uses single-precision floats, so we use float for better performance.
+    # The FPU can execute single-precision operations natively without software emulation overhead.
+    # Using float reduces memory bandwidth and cache pressure, which is critical on Wii's limited RAM.
     add_compile_definitions(USE_FLOAT_REALS)
     # Disable Wiiscotch VM/interpreter tracing checks for performance
     add_compile_definitions(DISABLE_VM_TRACING)
     
     # Wii-specific compile options
+    # -fsingle-precision-constant ensures float literals are treated as single-precision
     add_compile_options(-fsingle-precision-constant)
+    
+    # Option to enable DVD support (requires libogc DVD interface)
+    option(WII_ENABLE_DVD_SUPPORT "Enable DVD storage medium support" ON)
+    # Option to enable USB mass storage support (requires libogc USB stack)  
+    option(WII_ENABLE_USB_STORAGE "Enable USB mass storage support" ON)
+    
+    if(WII_ENABLE_DVD_SUPPORT)
+        add_compile_definitions(WII_ENABLE_DVD_SUPPORT)
+    endif()
+    
+    if(WII_ENABLE_USB_STORAGE)
+        add_compile_definitions(WII_ENABLE_USB_STORAGE)
+    endif()
     
     if(WII)
         # Compiling with devkitPPC
@@ -237,10 +254,15 @@ elseif(PLATFORM STREQUAL "wii")
         target_compile_definitions(wiiscotch PRIVATE GEKKO HW_DOL)
     else()
         # Development mode (CLion, etc.)
-        target_include_directories(wiiscotch PRIVATE
-            ${CMAKE_SOURCE_DIR}/devkitpro/libogc/include
-            ${CMAKE_SOURCE_DIR}/devkitpro/portlibs/wii/include
-        )
+        # Check if devkitPro headers exist, otherwise warn user
+        if(EXISTS "${CMAKE_SOURCE_DIR}/devkitpro/libogc/include")
+            target_include_directories(wiiscotch PRIVATE
+                ${CMAKE_SOURCE_DIR}/devkitpro/libogc/include
+                ${CMAKE_SOURCE_DIR}/devkitpro/portlibs/wii/include
+            )
+        else()
+            message(WARNING "devkitPro headers not found. Wii platform files will fail to compile. Install devkitPro or use cross-compilation.")
+        endif()
         target_compile_definitions(wiiscotch PRIVATE GEKKO HW_DOL)
     endif()
 else()
