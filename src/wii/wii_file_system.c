@@ -3,11 +3,34 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fat.h>
+#include <ogc/dvd.h>
+#include <ogc/usbstorage.h>
 
 typedef struct {
     FileSystem base;
     char savePath[256];
+    bool dvdInitialized;
+    bool usbInitialized;
 } WiiFileSystem;
+
+// Initialize DVD subsystem
+static void initDVD(void) {
+#ifdef WII_ENABLE_DVD_SUPPORT
+    DVD_Init();
+    printf("DVD subsystem initialized\n");
+#endif
+}
+
+// Initialize USB mass storage subsystem
+static void initUSBStorage(void) {
+#ifdef WII_ENABLE_USB_STORAGE
+    if (USBStorage_Initialize()) {
+        printf("USB mass storage initialized\n");
+    } else {
+        printf("USB mass storage initialization failed (no device connected?)\n");
+    }
+#endif
+}
 
 static FILE* wii_fopen(const char* path, const char* mode, void* userData) {
     WiiFileSystem* fs = (WiiFileSystem*) userData;
@@ -19,14 +42,16 @@ static FILE* wii_fopen(const char* path, const char* mode, void* userData) {
         return fopen(fullPath, mode);
     }
     
-    // Default to SD card
-    if (path[0] != '/') {
-        char fullPath[512];
-        snprintf(fullPath, sizeof(fullPath), "sd:/%s", path);
-        return fopen(fullPath, mode);
+    // Check for explicit device prefixes
+    if (strncmp(path, "sd:", 3) == 0 || strncmp(path, "usb:", 4) == 0 || 
+        strncmp(path, "dvd:", 4) == 0 || path[0] == '/') {
+        return fopen(path, mode);
     }
     
-    return fopen(path, mode);
+    // Default to SD card for relative paths
+    char fullPath[512];
+    snprintf(fullPath, sizeof(fullPath), "sd:/%s", path);
+    return fopen(fullPath, mode);
 }
 
 static void wii_fclose(FILE* file, void* userData) {
@@ -80,6 +105,20 @@ FileSystem* WiiFileSystem_create(JsonValue* config, const char* gameName) {
     WiiFileSystem* fs = (WiiFileSystem*) calloc(1, sizeof(WiiFileSystem));
     if (!fs) return NULL;
     
+    // Initialize storage subsystems
+    fs->dvdInitialized = false;
+    fs->usbInitialized = false;
+    
+#ifdef WII_ENABLE_DVD_SUPPORT
+    initDVD();
+    fs->dvdInitialized = true;
+#endif
+    
+#ifdef WII_ENABLE_USB_STORAGE
+    initUSBStorage();
+    fs->usbInitialized = true;
+#endif
+    
     // Default save path
     strncpy(fs->savePath, "sd:/wiiscotch_saves/", sizeof(fs->savePath) - 1);
     
@@ -103,6 +142,10 @@ FileSystem* WiiFileSystem_create(JsonValue* config, const char* gameName) {
     fs->base.exists = wii_exists;
     fs->base.destroy = wii_destroy;
     fs->base.userData = fs;
+    
+    printf("Wii FileSystem created - SD: ready, USB: %s, DVD: %s\n",
+           fs->usbInitialized ? "enabled" : "disabled",
+           fs->dvdInitialized ? "enabled" : "disabled");
     
     return &fs->base;
 }

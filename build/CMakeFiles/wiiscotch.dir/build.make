@@ -265,89 +265,75 @@ CMakeFiles/wiiscotch.dir/src/vm_builtins.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/wiiscotch.dir/src/vm_builtins.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /workspace/src/vm_builtins.c -o CMakeFiles/wiiscotch.dir/src/vm_builtins.c.s
 
-CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.o: CMakeFiles/wiiscotch.dir/flags.make
-CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.o: /workspace/src/wii/gx_renderer.c
-CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.o: CMakeFiles/wiiscotch.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.o -MF CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.o.d -o CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.o -c /workspace/src/wii/gx_renderer.c
+CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.o: CMakeFiles/wiiscotch.dir/flags.make
+CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.o: /workspace/src/glfw/gl_renderer.c
+CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.o: CMakeFiles/wiiscotch.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.o -MF CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.o.d -o CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.o -c /workspace/src/glfw/gl_renderer.c
 
-CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /workspace/src/wii/gx_renderer.c > CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.i
+CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /workspace/src/glfw/gl_renderer.c > CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.i
 
-CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /workspace/src/wii/gx_renderer.c -o CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.s
+CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /workspace/src/glfw/gl_renderer.c -o CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.s
 
-CMakeFiles/wiiscotch.dir/src/wii/main.c.o: CMakeFiles/wiiscotch.dir/flags.make
-CMakeFiles/wiiscotch.dir/src/wii/main.c.o: /workspace/src/wii/main.c
-CMakeFiles/wiiscotch.dir/src/wii/main.c.o: CMakeFiles/wiiscotch.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/wiiscotch.dir/src/wii/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/wiiscotch.dir/src/wii/main.c.o -MF CMakeFiles/wiiscotch.dir/src/wii/main.c.o.d -o CMakeFiles/wiiscotch.dir/src/wii/main.c.o -c /workspace/src/wii/main.c
+CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.o: CMakeFiles/wiiscotch.dir/flags.make
+CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.o: /workspace/src/glfw/glfw_file_system.c
+CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.o: CMakeFiles/wiiscotch.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.o -MF CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.o.d -o CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.o -c /workspace/src/glfw/glfw_file_system.c
 
-CMakeFiles/wiiscotch.dir/src/wii/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/wiiscotch.dir/src/wii/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /workspace/src/wii/main.c > CMakeFiles/wiiscotch.dir/src/wii/main.c.i
+CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /workspace/src/glfw/glfw_file_system.c > CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.i
 
-CMakeFiles/wiiscotch.dir/src/wii/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/wiiscotch.dir/src/wii/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /workspace/src/wii/main.c -o CMakeFiles/wiiscotch.dir/src/wii/main.c.s
+CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /workspace/src/glfw/glfw_file_system.c -o CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.s
 
-CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.o: CMakeFiles/wiiscotch.dir/flags.make
-CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.o: /workspace/src/wii/runner_keyboard.c
-CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.o: CMakeFiles/wiiscotch.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.o -MF CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.o.d -o CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.o -c /workspace/src/wii/runner_keyboard.c
+CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.o: CMakeFiles/wiiscotch.dir/flags.make
+CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.o: /workspace/src/glfw/ma_audio_system.c
+CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.o: CMakeFiles/wiiscotch.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.o -MF CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.o.d -o CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.o -c /workspace/src/glfw/ma_audio_system.c
 
-CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /workspace/src/wii/runner_keyboard.c > CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.i
+CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /workspace/src/glfw/ma_audio_system.c > CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.i
 
-CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /workspace/src/wii/runner_keyboard.c -o CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.s
+CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /workspace/src/glfw/ma_audio_system.c -o CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.s
 
-CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.o: CMakeFiles/wiiscotch.dir/flags.make
-CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.o: /workspace/src/wii/wii_audio_system.c
-CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.o: CMakeFiles/wiiscotch.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.o -MF CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.o.d -o CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.o -c /workspace/src/wii/wii_audio_system.c
+CMakeFiles/wiiscotch.dir/src/glfw/main.c.o: CMakeFiles/wiiscotch.dir/flags.make
+CMakeFiles/wiiscotch.dir/src/glfw/main.c.o: /workspace/src/glfw/main.c
+CMakeFiles/wiiscotch.dir/src/glfw/main.c.o: CMakeFiles/wiiscotch.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/wiiscotch.dir/src/glfw/main.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/wiiscotch.dir/src/glfw/main.c.o -MF CMakeFiles/wiiscotch.dir/src/glfw/main.c.o.d -o CMakeFiles/wiiscotch.dir/src/glfw/main.c.o -c /workspace/src/glfw/main.c
 
-CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /workspace/src/wii/wii_audio_system.c > CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.i
+CMakeFiles/wiiscotch.dir/src/glfw/main.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/wiiscotch.dir/src/glfw/main.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /workspace/src/glfw/main.c > CMakeFiles/wiiscotch.dir/src/glfw/main.c.i
 
-CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /workspace/src/wii/wii_audio_system.c -o CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.s
+CMakeFiles/wiiscotch.dir/src/glfw/main.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/wiiscotch.dir/src/glfw/main.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /workspace/src/glfw/main.c -o CMakeFiles/wiiscotch.dir/src/glfw/main.c.s
 
-CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.o: CMakeFiles/wiiscotch.dir/flags.make
-CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.o: /workspace/src/wii/wii_file_system.c
-CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.o: CMakeFiles/wiiscotch.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.o -MF CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.o.d -o CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.o -c /workspace/src/wii/wii_file_system.c
+CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.o: CMakeFiles/wiiscotch.dir/flags.make
+CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.o: /workspace/src/glfw/stb_impl.c
+CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.o: CMakeFiles/wiiscotch.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.o -MF CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.o.d -o CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.o -c /workspace/src/glfw/stb_impl.c
 
-CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /workspace/src/wii/wii_file_system.c > CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.i
+CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /workspace/src/glfw/stb_impl.c > CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.i
 
-CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /workspace/src/wii/wii_file_system.c -o CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.s
-
-CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.o: CMakeFiles/wiiscotch.dir/flags.make
-CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.o: /workspace/src/wii/wii_utils.c
-CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.o: CMakeFiles/wiiscotch.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.o -MF CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.o.d -o CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.o -c /workspace/src/wii/wii_utils.c
-
-CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /workspace/src/wii/wii_utils.c > CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.i
-
-CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /workspace/src/wii/wii_utils.c -o CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.s
+CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /workspace/src/glfw/stb_impl.c -o CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.s
 
 # Object files for target wiiscotch
 wiiscotch_OBJECTS = \
@@ -365,12 +351,11 @@ wiiscotch_OBJECTS = \
 "CMakeFiles/wiiscotch.dir/src/runner_keyboard.c.o" \
 "CMakeFiles/wiiscotch.dir/src/vm.c.o" \
 "CMakeFiles/wiiscotch.dir/src/vm_builtins.c.o" \
-"CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.o" \
-"CMakeFiles/wiiscotch.dir/src/wii/main.c.o" \
-"CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.o" \
-"CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.o" \
-"CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.o" \
-"CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.o"
+"CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.o" \
+"CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.o" \
+"CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.o" \
+"CMakeFiles/wiiscotch.dir/src/glfw/main.c.o" \
+"CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.o"
 
 # External object files for target wiiscotch
 wiiscotch_EXTERNAL_OBJECTS =
@@ -389,15 +374,15 @@ wiiscotch: CMakeFiles/wiiscotch.dir/src/runner.c.o
 wiiscotch: CMakeFiles/wiiscotch.dir/src/runner_keyboard.c.o
 wiiscotch: CMakeFiles/wiiscotch.dir/src/vm.c.o
 wiiscotch: CMakeFiles/wiiscotch.dir/src/vm_builtins.c.o
-wiiscotch: CMakeFiles/wiiscotch.dir/src/wii/gx_renderer.c.o
-wiiscotch: CMakeFiles/wiiscotch.dir/src/wii/main.c.o
-wiiscotch: CMakeFiles/wiiscotch.dir/src/wii/runner_keyboard.c.o
-wiiscotch: CMakeFiles/wiiscotch.dir/src/wii/wii_audio_system.c.o
-wiiscotch: CMakeFiles/wiiscotch.dir/src/wii/wii_file_system.c.o
-wiiscotch: CMakeFiles/wiiscotch.dir/src/wii/wii_utils.c.o
+wiiscotch: CMakeFiles/wiiscotch.dir/src/glfw/gl_renderer.c.o
+wiiscotch: CMakeFiles/wiiscotch.dir/src/glfw/glfw_file_system.c.o
+wiiscotch: CMakeFiles/wiiscotch.dir/src/glfw/ma_audio_system.c.o
+wiiscotch: CMakeFiles/wiiscotch.dir/src/glfw/main.c.o
+wiiscotch: CMakeFiles/wiiscotch.dir/src/glfw/stb_impl.c.o
 wiiscotch: CMakeFiles/wiiscotch.dir/build.make
+wiiscotch: libglad.a
 wiiscotch: CMakeFiles/wiiscotch.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Linking C executable wiiscotch"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/workspace/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Linking C executable wiiscotch"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/wiiscotch.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
